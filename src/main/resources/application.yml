@@ -1,2 +1,11 @@
 server:
   port: 9090
+spring:
+  application:
+    name: iot-access-platform
+
+netty:
+  port:  8000
+  timeout: 30
+
+

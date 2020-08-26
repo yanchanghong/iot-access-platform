@@ -31,7 +31,7 @@ public abstract class AbstractNettyServer implements IServer {
 
     @Override
     public void start() {
-        log.debug("开始启动服务端");
+        log.info("开始启动服务端");
         bossGroup = new NioEventLoopGroup(1);
         workerGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
@@ -41,7 +41,7 @@ public abstract class AbstractNettyServer implements IServer {
                 .option(ChannelOption.SO_BACKLOG, 100)
                 .childHandler(getChannelInitializer());
         ChannelFuture future = bootstrap.bind(port);
-        log.debug("绑定端口成功");
+        log.info("绑定端口成功");
     }
 
     @Override
@@ -52,4 +52,12 @@ public abstract class AbstractNettyServer implements IServer {
 
     public abstract ChannelInitializer<SocketChannel> getChannelInitializer();
 
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 }

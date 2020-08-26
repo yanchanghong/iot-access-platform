@@ -1,11 +1,12 @@
 package com.iot.iotaccessplatform.controller;
 
 import com.iot.iotaccessplatform.entity.Response;
+import com.iot.iotaccessplatform.server.netty.service.CmdSendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @Api(tags = "命令下发控制")
-@RequestMapping("/vi/cmd")
+@RequestMapping("/vi")
+@Slf4j
 public class CmdController {
+    @Autowired
+    private CmdSendService cmdSendService;
 
-    @GetMapping("/send/cmd")
+    @PostMapping("/send/cmd")
     @ApiOperation("发送指令")
-    public Response sendCmd() throws Exception {
-        throw new Exception("出错");
-        //return Response.success();
+    public Response sendCmd(@RequestBody String cmd) throws Exception {
+        cmdSendService.send(cmd);
+        return Response.success();
     }
 }
